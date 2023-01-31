@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+        <h3>Edit desciption:</h3>
+
+        <label for="name">Description</label>
+        <textarea id="name"></textarea>
+
+        <h3>Result:</h3>
+        <label for="">Updated description</label>
+        <div id="result"></div>
+
+        <script>
+            const name = document.getElementById('name');
+            name.value = window.localStorage.getItem('name') || '';
+
+            name.addEventListener('keyup', (e) => {
+                storeName(e.target.value);
+                const result = document.getElementById('result');
+                result.innerHTML = name.value;
+            });
+
+            function storeName(name) {
+                window.localStorage.setItem('name', name);
+            }
+
+            window.onstorage = (e) => {
+                console.log('local storage was changed');
+                console.log(e);
+                if (e.key !== 'name') return;
+                const result = document.getElementById('result');
+                result.innerHTML = e.newValue;
+
+                const name = document.getElementById('name');
+                name.value = e.newValue;
+            };
+
+            const result = document.getElementById('result');
+            result.innerHTML = window.localStorage.getItem('name') || '';
+        </script>
+    </body>
+</html>
